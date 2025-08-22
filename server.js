@@ -1,4 +1,5 @@
 // === MegaUniversity — Course Enrollment (Starter with TODOs) ===
+const { error } = require('console');
 const express = require('express');
 const path = require('path');
 
@@ -6,6 +7,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 /* ===== Middleware (order matters) ===== */
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(error());
+
 // Use built-in body parser for HTML forms
 app.use(express.urlencoded({ extended: true }));
 
