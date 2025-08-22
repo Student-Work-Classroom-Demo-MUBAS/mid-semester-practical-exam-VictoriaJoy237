@@ -22,18 +22,18 @@
       <form action="/enroll" method="POST" id="enrollForm" novalidate>
         <div class="grid-2">
           <div class="form-group">
-            <label for="studentName">Student Name *</label>
-            <input type="text" id="studentName" name="studentName" placeholder="e.g., Jane Doe" required />
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" name="studentName" placeholder="Enter your name" required />
           </div>
           <div class="form-group">
-            <label for="studentId">Student ID (YYYY-NNNN) *</label>
-            <input type="text" id="studentId" name="studentId" placeholder="e.g., 2025-0001" required />
+            <label for="studentId">Student ID (YYYY-NNNN): </label>
+            <input type="text" id="studentId" name="studentId" placeholder="Enter your student ID" required />
           </div>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
-            <label for="courseCode">Course *</label>
+            <label for="courseCode">Course :</label>
             <select id="courseCode" name="courseCode" required>
               <option value="">-- Select Course --</option>
               <option value="CS401">CS401 — Advanced Web Development</option>
@@ -44,7 +44,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="semester">Semester *</label>
+            <label for="semester">Semester :</label>
             <select id="semester" name="semester" required>
               <option value="">-- Select Semester --</option>
               <option value="Fall 2025">Fall 2025</option>
