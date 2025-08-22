@@ -92,6 +92,16 @@ const enrollments = [
 let enrollmentIdCounter = 1;
 app.locals.courses = availableCourses;
 
+app.use((req, res, next) => {
+  res.locals.courses = availableCourses;
+  next();
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+  next();
+});
 
 /* ===== Helpers ===== */
 const page = (title, body) => `<!doctype html>
