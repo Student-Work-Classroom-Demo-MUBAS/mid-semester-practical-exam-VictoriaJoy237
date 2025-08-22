@@ -45,7 +45,7 @@ button:hover { background: #1742a0; }
 .small { padding: .4rem .6rem; font-size: .9rem; }
 
 .table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; margin-top: .75rem; }
+table { width: 100%; border-collapse: collapse; margin-top: .75rem; border: solid 2px #0a089b;}
 th, td, tr { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #e5e7eb; border: solid 2px #2268f3; }
 th { color: #111827; }
 td { color: #111827;  border: solid 2px #2268f3; }
