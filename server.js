@@ -23,7 +23,71 @@ const availableCourses = [
   { code: "CS404", name: "Computer Networks",         instructor: "Dr. Zhao",  credits: 3, capacity: 30 },
   { code: "CS405", name: "Artificial Intelligence",   instructor: "Dr. Gomez", credits: 3, capacity: 25 }
 ];
-const enrollments = []; // { id, studentName, studentId, courseCode, courseName, semester, reason, enrollmentDate }
+const enrollments = [
+  
+  {
+    id: enrollmentIdCounter++,
+    studentName: "John Doe",
+    studentId: "2025-0001",
+    courseCode: "CS401",
+    courseName: "Advanced Web Development",
+    semester: "Fall 2025",
+    reason: "Interested in web technologies",
+    enrollmentDate: new Date()
+  },
+
+  {
+    id: enrollmentIdCounter++,
+    studentName: "Jane Smith",
+    studentId: "2025-0002",
+    courseCode: "CS402",
+    courseName: "Database Systems",
+    semester: "Fall 2025",
+    reason: "Need for data management skills",
+    enrollmentDate: new Date()
+  },
+
+  {
+    id: enrollmentIdCounter++,
+    studentName: "Alice Johnson",
+    studentId: "2025-0044",
+    courseCode: "CS403",
+    courseName: "Software Engineering",
+    semester: "Fall 2025",
+    reason: "Want to learn about software development processes",
+    enrollmentDate: new Date()
+  },
+
+  {
+    id: enrollmentIdCounter++,
+    studentId: "2025-0102",
+    courseCode: "CS404",
+    courseName: "Computer Networks",
+    semester: "Fall 2025",
+    reason: "Want to learn about computer networking engineering",
+    enrollmentDate: new Date()
+  },
+
+  {
+    id: enrollmentIdCounter++,
+    studentId: "2025-0102",
+    courseCode: "CS404",
+    courseName: "Computer Networks",
+    semester: "Fall 2023",
+    reason: "Want to learn about computer networking engineering",
+    enrollmentDate: new Date()
+  },
+
+  {
+    id: enrollmentIdCounter++,
+    studentId: "2025-0100",
+    courseCode: "CS405",
+    courseName: "Artificial Intelligence",
+    semester: "Fall 2025",
+    reason: "Want to learn about artificial intelligence and machine learning",
+    enrollmentDate: new Date()
+  }
+]; // { id, studentName, studentId, courseCode, courseName, semester, reason, enrollmentDate }
 let enrollmentIdCounter = 1;
 app.locals.courses = availableCourses;
 
@@ -171,6 +235,7 @@ app.post('/unenroll/:id', (req, res) => {
     console.error(err.stack);
     res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
   });
+
   return res.status(501).send(page('Not Implemented', '<p class="muted">TODO: implement /unenroll/:id</p><p><a href="/enrollments">Back</a></p>'));
 });
 
