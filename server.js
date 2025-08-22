@@ -121,8 +121,24 @@ app.post('/enroll', (req, res) => {
 
 
   // 3) Create enrollment object; push; increment id
-  
+  const newEnroll = {
+    id: enrollmentIdCounter++,
+    studentName: String(studentName).trim(),
+    studentId: String(studentId).trim(),
+    courseCode: String(courseCode).trim(),
+    courseName: course.name,
+    semester: String(semester).trim(),
+    reason: reason ? String(reason).trim() : '',
+    enrollmentDate: Date.now()
+  };
+  enrollments.push(newEnroll);
+
   // 4) Redirect to /enrollments on success; otherwise show error page with Back link
+  res.redirect('/enrollments');
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
+  });
 
   /* Example shape to build (DO NOT UNCOMMENT — for reference only)
   const course = courseByCode(courseCode);
