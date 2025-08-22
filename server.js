@@ -143,13 +143,14 @@ app.post('/enroll', (req, res) => {
   /* Example shape to build (DO NOT UNCOMMENT — for reference only)
   const course = courseByCode(courseCode);
   const newEnroll = {
-    id: enrollmentIdCounter++,
+    id: enrollmentIdCounter+
     studentName, studentId, courseCode, courseName: course.name,
     semester, reason, enrollmentDate: Date.now()
   };
   enrollments.push(newEnroll);
   res.redirect('/enrollments');
   */
+ 
   return res.status(501).send(page('Not Implemented', '<p class="muted">TODO: implement /enroll using req.body</p><p><a href="/">Back</a></p>'));
 });
 
@@ -157,9 +158,19 @@ app.post('/enroll', (req, res) => {
 app.post('/unenroll/:id', (req, res) => {
   // TODO:
   // 1) Parse id from req.params
+  const id = parseInt(req.params.id, 10);
   // 2) Remove matching enrollment from array if found
-  // 3) Redirect back to /enrollments (or show error)
+  const index = enrollments.findIndex(e => e.id === id);
+  if (index !== -1) {
+    enrollments.splice(index, 1);
+  }
 
+  // 3) Redirect back to /enrollments (or show error)
+  res.redirect('/enrollments');
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
+  });
   return res.status(501).send(page('Not Implemented', '<p class="muted">TODO: implement /unenroll/:id</p><p><a href="/enrollments">Back</a></p>'));
 });
 
