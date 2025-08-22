@@ -123,8 +123,11 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.ht
 // Server-rendered enrollments list (no JSON)
 app.get('/enrollments', (req, res) => {
   const rows = enrollments.map((e, i) => `
-    <link rel="stylesheet" href="/css/styles.css">
-    <tr>
+    <!doctype html>
+    <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="/css/style.css"/></head>
+    <body>
+      <tr>
       <td>${i+1}</td>
       <td>${escape(e.studentName)}</td>
       <td>${escape(e.studentId)}</td>
@@ -137,6 +140,8 @@ app.get('/enrollments', (req, res) => {
         </form>
       </td>
     </tr>
+    </body>
+    
   `).join('');
 
   res.send(rows);

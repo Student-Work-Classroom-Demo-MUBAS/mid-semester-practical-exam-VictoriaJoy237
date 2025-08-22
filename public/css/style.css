@@ -46,7 +46,7 @@ button:hover { background: #1742a0; }
 
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; margin-top: .75rem; }
-th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #e5e7eb; }
+th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #e5e7eb; border: solid 2px #2268f3; }
 th { color: #111827; }
 td { color: #111827; }
 .muted { color: var(--muted); }
