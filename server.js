@@ -98,7 +98,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  err.send(res);
   res.status(500).send('Something broke!');
   next();
 });
@@ -146,6 +146,30 @@ app.get('/enrollments', (req, res) => {
       </td>
     </tr>
   `).join('');
+
+  if (rows.length === 0) {
+    console.log('No enrollments found.');
+  }
+
+  function checkform(){
+    if (enrollments.length === 0) {
+      console.log('No enrollments found.');
+      return '<tr><td colspan="7" class="muted">No enrollments yet</td></tr>';
+    }
+
+    if (format.element === "") {
+      console.log('No enrollments found.');
+      return '<tr><td colspan="7" class="muted">No enrollments yet</td></tr>';
+    }
+
+    if (inputType === "") {
+      console.log('No enrollments found.');
+      return '<tr><td colspan="7" class="muted">No enrollments yet</td></tr>';
+    }
+  }
+
+  checkform();
+
 
   const body = `
     <section class="card">
@@ -211,7 +235,7 @@ app.post('/enroll', (req, res) => {
   // 4) Redirect to /enrollments on success; otherwise show error page with Back link
   res.redirect('/enrollments');
   app.use((err, req, res, next) => {
-    console.error(err.stack);
+    err.send(res);
     res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
   });
 
@@ -243,7 +267,7 @@ app.post('/unenroll/:id', (req, res) => {
   // 3) Redirect back to /enrollments (or show error)
   res.redirect('/enrollments');
   app.use((err, req, res, next) => {
-    console.error(err.stack);
+    err.send(res);
     res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
   });
 
