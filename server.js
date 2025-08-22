@@ -25,6 +25,8 @@ const availableCourses = [
 ];
 const enrollments = []; // { id, studentName, studentId, courseCode, courseName, semester, reason, enrollmentDate }
 let enrollmentIdCounter = 1;
+app.locals.courses = availableCourses;
+
 
 /* ===== Helpers ===== */
 const page = (title, body) => `<!doctype html>
@@ -103,8 +105,23 @@ app.get('/courses', (req, res) => {
 app.post('/enroll', (req, res) => {
   // TODO:
   // 1) Read fields from req.body: studentName, studentId, courseCode, semester, reason(optional)
+  const { studentName, studentId, courseCode, semester, reason } = req.body;
+  
   // 2) Validate: required fields; studentId matches YYYY-NNNN; course exists
+  if (!studentName || !studentId || !courseCode || !semester) {
+    return res.status(400).send(page('Error', '<p class="muted">Missing required fields.</p><p><a href="/">Back</a></p>'));
+  }
+  if (!studentIdOk(studentId)) {
+    return res.status(400).send(page('Error', '<p class="muted">Invalid student ID format.</p><p><a href="/">Back</a></p>'));
+  }
+  const course = courseByCode(courseCode);
+  if (!course) {
+    return res.status(400).send(page('Error', '<p class="muted">Course not found.</p><p><a href="/">Back</a></p>'));
+  }
+
+
   // 3) Create enrollment object; push; increment id
+  
   // 4) Redirect to /enrollments on success; otherwise show error page with Back link
 
   /* Example shape to build (DO NOT UNCOMMENT — for reference only)
