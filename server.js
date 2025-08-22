@@ -9,8 +9,6 @@ const PORT = process.env.PORT || 3000;
 /* ===== Middleware (order matters) ===== */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(error());
 
 // Use built-in body parser for HTML forms
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +22,10 @@ const availableCourses = [
   { code: "CS405", name: "Artificial Intelligence",   instructor: "Dr. Gomez", credits: 3, capacity: 25 }
 ];
 
+let enrollmentIdCounter = 1;
+
 const enrollments = [
+
   
   {
     id: enrollmentIdCounter++,
@@ -89,19 +90,9 @@ const enrollments = [
     enrollmentDate: new Date()
   }
 ]; // { id, studentName, studentId, courseCode, courseName, semester, reason, enrollmentDate }
-let enrollmentIdCounter = 1;
+
 app.locals.courses = availableCourses;
 
-app.use((req, res, next) => {
-  res.locals.courses = availableCourses;
-  next();
-});
-
-app.use((err, req, res, next) => {
-  err.send(res);
-  res.status(500).send('Something broke!');
-  next();
-});
 
 /* ===== Helpers ===== */
 const page = (title, body) => `<!doctype html>
@@ -132,6 +123,7 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.ht
 // Server-rendered enrollments list (no JSON)
 app.get('/enrollments', (req, res) => {
   const rows = enrollments.map((e, i) => `
+    <link rel="stylesheet" href="/css/styles.css">
     <tr>
       <td>${i+1}</td>
       <td>${escape(e.studentName)}</td>
@@ -146,6 +138,8 @@ app.get('/enrollments', (req, res) => {
       </td>
     </tr>
   `).join('');
+
+  res.send(rows);
 
   if (rows.length === 0) {
     console.log('No enrollments found.');
@@ -234,10 +228,7 @@ app.post('/enroll', (req, res) => {
 
   // 4) Redirect to /enrollments on success; otherwise show error page with Back link
   res.redirect('/enrollments');
-  app.use((err, req, res, next) => {
-    err.send(res);
-    res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
-  });
+  
 
   /* Example shape to build (DO NOT UNCOMMENT — for reference only)
   const course = courseByCode(courseCode);
@@ -266,10 +257,6 @@ app.post('/unenroll/:id', (req, res) => {
 
   // 3) Redirect back to /enrollments (or show error)
   res.redirect('/enrollments');
-  app.use((err, req, res, next) => {
-    err.send(res);
-    res.status(500).send(page('Error', '<p class="muted">Internal Server Error</p><p><a href="/">Back</a></p>'));
-  });
 
   return res.status(501).send(page('Not Implemented', '<p class="muted">TODO: implement /unenroll/:id</p><p><a href="/enrollments">Back</a></p>'));
 });

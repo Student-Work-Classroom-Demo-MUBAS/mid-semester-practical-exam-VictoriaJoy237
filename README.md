@@ -104,7 +104,7 @@ course-enrollment-system/
 Pick **one** and implement end‑to‑end (server + UI):
 
 - **A. Analytics:** simple counts per course on `/enrollments` (e.g., “CS401: 3 enrollments”).  
-- **B. Course management (lite):** simple admin form to **add a course** (validate and push to `availableCourses`; same page list).  
+- **B. Course management (lite):** simple admin form to **add a course** (validate and push to `vailableCourses`; same page list).  
 - **C. Search/Filter:** filter enrollments by course or text (name/ID) on the `/enrollments` page (client‑side or server‑side).
 
 ---
